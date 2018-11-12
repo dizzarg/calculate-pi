@@ -1,0 +1,46 @@
+version: '2'
+services:
+
+  zookeeper:
+    image: zookeeper:3.4.10
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      - ZOO_MAX_CLIENT_CNXNS=0
+      - ZOO_TICK_TIME=10000
+      - ZOO_STANDALONE_ENABLED=true
+
+  zk-web:
+    image: noteax/zk-web-docker:1.1.0
+    container_name: zk-web
+    environment:
+      - ZKWEB_DEFAULT_NODE=zookeeper:2181
+    #      - ZKWEB_CREDENTIALS=admin:hello # this is default credentials
+    ports:
+      - 9090:8080
+
+  mongo:
+    image: mongo
+    hostname: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: example
+
+#  db:
+#    image: mysql
+#    hostname: db
+#    container_name: db
+#    ports:
+#      - 3306:3306
+#    environment:
+#      - MYSQL_DATABASE=calculate
+#      - MYSQL_ROOT_PASSWORD=calculate
+#      - MYSQL_USER=calculate
+#      - MYSQL_PASSWORD=calculate
+#      - PGDATA=/var/lib/postgresql/data/pgdata
+#      - TZ=Europe/Moscow
