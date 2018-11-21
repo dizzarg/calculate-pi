@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Producer-Consumers pattern implemenation
+ * Producer-Consumers pattern implementation
  *
  * @param <MESSAGE> incoming message type
  * @param <RESULT>  executed result type
@@ -36,7 +36,7 @@ public class ProducerConsumer<MESSAGE, RESULT> {
         this.pool = pool;
         pool.submit(() -> {
             while (alive || queue.count() > 0) {
-                Event e = queue.dequue();
+                Event e = queue.dequeue();
                 switch (e.eventType) {
                     case INVOCATION:
                         e.result.complete(consumer.compute(e.value));
@@ -56,14 +56,14 @@ public class ProducerConsumer<MESSAGE, RESULT> {
         event.value = message;
         event.eventType = EventType.INVOCATION;
         event.result = new CompletableFuture<>();
-        queue.enquue(event);
+        queue.enqueue(event);
         return event.result;
     }
 
     public void shutdown() throws InterruptedException {
         Event event = new Event();
         event.eventType = EventType.COMPLETION;
-        queue.enquue(event);
+        queue.enqueue(event);
         pool.shutdown();
         Integer timeout = Integer.getInteger(CONSUMER_POOL_AWAIT_TERMINATION_MS, 1000);
         if (!pool.awaitTermination(timeout, TimeUnit.MILLISECONDS)) {

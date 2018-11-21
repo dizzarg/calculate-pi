@@ -3,6 +3,11 @@ package ru.dkadyrov.calculate.pi.standalone;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * Simple task queue based on {@link java.util.concurrent.ArrayBlockingQueue}.
+ *
+ * @param <E>
+ */
 public class TaskQueue<E> {
 
     BlockingQueue<E> queue;
@@ -12,11 +17,11 @@ public class TaskQueue<E> {
         queue = new ArrayBlockingQueue<>(length);
     }
 
-    public void enquue(E value) throws InterruptedException {
+    public void enqueue(E value) throws InterruptedException {
         queue.put(value);
     }
 
-    public E dequue() throws InterruptedException {
+    public E dequeue() throws InterruptedException {
         if (!alive) {
             Thread.currentThread().interrupt();
         }

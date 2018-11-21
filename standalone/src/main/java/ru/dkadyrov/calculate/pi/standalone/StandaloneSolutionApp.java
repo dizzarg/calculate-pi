@@ -6,6 +6,9 @@ import ru.dkadyrov.calculate.pi.api.Leibniz;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The Simple standalone application will calculate the approximate value of calculations π.
+ */
 @Slf4j
 public class StandaloneSolutionApp {
 
