@@ -1,20 +1,23 @@
 package ru.dkadyrov.calculate.pi.distributed.master;
 
-import ru.dkadyrov.calculate.pi.distributed.common.ZKClient;
-import ru.dkadyrov.calculate.pi.distributed.common.ZKClientImpl;
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
 public class MasterApp {
 
     public static void main(String[] args) throws Exception {
-        ZKClient zkClient = new ZKClientImpl(args[0]);
-        zkClient.connect();
-        Master master = new Master(zkClient);
-
-        master.runForMaster();
-        while (!zkClient.isExpired()) {
-            Thread.sleep(1000);
-        }
-        zkClient.close();
+        CountDownLatch latch = new CountDownLatch(1);
+        Master master = new Master(args[0], args[1]);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                master.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            latch.countDown();
+        }));
+        master.run();
+        latch.await();
     }
 
 }
