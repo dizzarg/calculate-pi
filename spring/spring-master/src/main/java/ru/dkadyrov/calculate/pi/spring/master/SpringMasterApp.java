@@ -6,20 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ru.dkadyrov.calculate.pi.api.Solution;
 import ru.dkadyrov.calculate.pi.distributed.client.DistributedSolution;
-import ru.dkadyrov.calculate.pi.distributed.common.ZKClient;
-import ru.dkadyrov.calculate.pi.distributed.common.ZKClientImpl;
 
 @SpringBootApplication
 public class SpringMasterApp {
 
-    @Bean(initMethod = "connect")
-    public ZKClient zkClient(@Value("${zk.connection.string}") String connectionString) {
-        return new ZKClientImpl(connectionString);
-    }
-
     @Bean
-    public Solution solution(ZKClient zkClient) {
-        return new DistributedSolution(zkClient);
+    public Solution solution(@Value("${zk.connection.string}") String connectionString) {
+        return new DistributedSolution(connectionString);
     }
 
     public static void main(String[] args) {
