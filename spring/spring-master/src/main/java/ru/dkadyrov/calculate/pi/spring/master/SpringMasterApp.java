@@ -12,7 +12,9 @@ public class SpringMasterApp {
 
     @Bean
     public Solution solution(@Value("${zk.connection.string}") String connectionString) {
-        return new DistributedSolution(connectionString);
+        DistributedSolution solution = new DistributedSolution(connectionString);
+        solution.start();
+        return solution;
     }
 
     public static void main(String[] args) {
