@@ -44,6 +44,7 @@ cmake-build-release/
 
 # File-based project format
 *.iws
+*.iml
 
 # IntelliJ
 out/
@@ -65,20 +66,3 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
-
-Будет удалено api/api.iml
-Будет удалено calculate-pi.iml
-Будет удалено calculate-pi.ipr
-Будет удалено distributed/client/client.iml
-Будет удалено distributed/client/distributed-client.iml
-Будет удалено distributed/client/src/test/
-Будет удалено distributed/common/common.iml
-Будет удалено distributed/distributed.iml
-Будет удалено distributed/master/master.iml
-Будет удалено distributed/master/src/test/
-Будет удалено distributed/worker/distributed-worker.iml
-Будет удалено distributed/worker/src/test/
-Будет удалено distributed/worker/worker.iml
-Будет удалено spring/spring-master/spring-master.iml
-Будет удалено spring/spring.iml
-Будет удалено standalone/standalone.iml
